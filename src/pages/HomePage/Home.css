@@ -1,0 +1,36 @@
+.container {
+  width: 70vw;
+  margin: auto;
+  text-align: center;
+}
+
+.header {
+  background-color: #6f4393;
+  padding: 20px;
+}
+
+.container_form {
+  width: 70vw;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+}
+
+.button {
+  background: #7044a0;
+  border: none;
+  border-bottom: 2px solid #603a88;
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  /* padding: 3.8px; */
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.input {
+    border: none;
+    font-size: 20px;
+    font-weight: 300;
+    /* height: 24px;
+    padding: 4px 8px; */
+}
