@@ -1,7 +1,7 @@
 import React from "react";
 import './table.css'
 const Table = ({ item }) => {
-  const HEADER = ["Date", "Item", "Price"]
+  const HEADER = ["Date", "Item", "Price","Quantity","Action"]
   return (
     <table>
       <tr>
@@ -13,6 +13,10 @@ const Table = ({ item }) => {
               <td> {e.date} </td>
               <td>{e.item_name}</td>
               <td>{e.item_price}</td>
+              <td>{e.item_quantity}</td>
+              <td>
+                <button onClick={() => console.log("delete")}>Remove</button>
+              </td>
             </tr>
           );
         })}

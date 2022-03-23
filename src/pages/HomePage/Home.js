@@ -19,14 +19,17 @@ const Home = () => {
   const [expenseName, setExpenseName] = useState("");
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (expenseName && price && date) {
-      const obj = { date: date, item_name: expenseName, item_price: price };
+      const obj = { date: date, item_name: expenseName, item_price: price, item_quantity:quantity };
       itemList.current.push(obj);
       setExpenseName("");
       setPrice("");
+      setQuantity(1)
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
     } else {
       alert("please enter all the enteries");
     }
@@ -46,7 +49,7 @@ const Home = () => {
       <div className="container_form">
         <form>
           <label>
-            Enter Date:
+            Enter Item Date:
             <input
               className="input"
               type="date"
@@ -77,13 +80,25 @@ const Home = () => {
               onChange={(e) => setPrice(e.target.value)}
             />
           </label>
+
+          <label>
+            Enter Item quantity:
+            <input
+              className="input"
+              type="number"
+              name="quantity"
+              value={quantity }
+              onChange={(e) => setQuantity(e.target.value)}
+            />
+          </label>
+
           <button className="button" onClick={onSubmit}>
             Add to calender
           </button>
         </form>
       </div>
-      <div>
-        <h5>expense for the April month</h5>
+      <div >
+        <h3>expense for the April month</h3>
         <Table item={itemList.current} />
       </div>
     </div>

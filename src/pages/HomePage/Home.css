@@ -7,13 +7,15 @@
 .header {
   background-color: #6f4393;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .container_form {
-  width: 70vw;
+  width: 40vw;
   margin: auto;
   text-align: center;
   padding: 10px;
+  /* display: flex; */
 }
 
 .button {
@@ -23,7 +25,8 @@
   color: white;
   font-size: 20px;
   font-weight: 300;
-  /* padding: 3.8px; */
+  padding: 10px 20px;
+  margin: 30px;
   transition: background 0.3s ease, color 0.3s ease;
 }
 
@@ -31,6 +34,15 @@
     border: none;
     font-size: 20px;
     font-weight: 300;
-    /* height: 24px;
-    padding: 4px 8px; */
+    margin: 10px 20px;
+    height: 40px;
+    padding: 4px 8px;
+}
+
+label{
+  display: block;
+  background: #353239;
+  border: 1px solid #423e47;
+  text-decoration: none;
+  margin: 10px;
 }
