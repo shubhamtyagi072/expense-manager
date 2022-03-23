@@ -1,12 +1,11 @@
 import React from "react";
 import './table.css'
 const Table = ({ item }) => {
+  const HEADER = ["Date", "Item", "Price"]
   return (
     <table>
       <tr>
-        <th> date </th>
-        <th> Item </th>
-        <th> Price</th>
+        {HEADER.map(e => <th key={e}>{e}</th>)}
       </tr>
         {item.map((e) => {
           return (

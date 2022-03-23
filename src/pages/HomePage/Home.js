@@ -28,7 +28,7 @@ const Home = () => {
       setExpenseName("");
       setPrice("");
     } else {
-      alert("please enter both the enteries");
+      alert("please enter all the enteries");
     }
   };
 
