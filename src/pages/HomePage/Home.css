@@ -39,6 +39,16 @@
     padding: 4px 8px;
 }
 
+.select {
+  border: none;
+  width: 220px;
+  font-size: 20px;
+  font-weight: 300;
+  margin: 10px 20px;
+  height: 40px;
+  padding: 4px 8px;
+}
+
 label{
   display: block;
   background: #353239;

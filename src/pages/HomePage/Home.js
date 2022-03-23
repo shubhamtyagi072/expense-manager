@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Table from "../../components/table";
 import "./Home.css";
 
@@ -15,24 +15,33 @@ import "./Home.css";
 */
 
 const Home = () => {
-  const itemList = useRef([]);
+  const [itemList, setItemList] = useState([]);
   const [expenseName, setExpenseName] = useState("");
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [quantity, setQuantity] = useState(1);
 
+  const onRemoveActn = (id) => {
+    console.log(id);
+    setItemList(itemList.filter((e) => e.item_entertime != id));
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (expenseName && price && date) {
-      const obj = { date: date, item_name: expenseName, item_price: price, item_quantity:quantity };
-      itemList.current.push(obj);
+      const obj = {
+        date: date,
+        item_name: expenseName,
+        item_price: price,
+        item_quantity: quantity,
+        item_entertime: new Date().getTime(),
+      };
+      setItemList([...itemList, obj]);
       setExpenseName("");
       setPrice("");
-      setQuantity(1)
-      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
-    } else {
-      alert("please enter all the enteries");
-    }
+      setQuantity(1);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    } else alert("please enter all the enteries");
   };
 
   return (
@@ -40,7 +49,7 @@ const Home = () => {
       {/* header */}
       <div className="header">
         <div className="container">
-          <h1>Expense Manager</h1>
+          <h1>Expense ₹ Manager</h1>
           <h2>manage your expenses here!!</h2>
         </div>
       </div>
@@ -87,19 +96,29 @@ const Home = () => {
               className="input"
               type="number"
               name="quantity"
-              value={quantity }
+              value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
             />
           </label>
+
+          {/* <label>
+            Enter Item type : 
+            <select name="expense" id="price" className="select">
+              <option value="food">Fast Food</option>
+              <option value="medicine">Medicine</option>
+              <option value="Loan">Loan</option>
+              <option value="Ayaashi">Aayashi</option>
+            </select>
+          </label> */}
 
           <button className="button" onClick={onSubmit}>
             Add to calender
           </button>
         </form>
       </div>
-      <div >
+      <div>
         <h3>expense for the April month</h3>
-        <Table item={itemList.current} />
+        <Table item={itemList} onRemoveActn={onRemoveActn} />
       </div>
     </div>
   );
