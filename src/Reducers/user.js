@@ -7,6 +7,7 @@ import {
 const initial = { userData: {}, laoding: false, error: null };
 
 const user = (state = initial, action) => {
+  console.log(action)
   switch (action.type) {
     case LOGIN_CURRENT_USER:
       return { ...state, laoding: true };

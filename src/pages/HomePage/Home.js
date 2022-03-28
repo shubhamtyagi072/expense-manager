@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../../components/table";
 import "./Home.css";
-
-/*
- json = [{
-   date:22-2-2022,
-   item_name:maggie,
-   item_price:13
- },{
-   date:22-2-2022,
-   item_name:diaper,
-   item_price:143
- }]
-*/
+import setExpenses,{getExpenses} from "../../Actions/Expense";
+import { useDispatch, useSelector } from "react-redux";
+var _ = require("lodash");
 
 const Home = () => {
   const [itemList, setItemList] = useState([]);
@@ -20,9 +11,14 @@ const Home = () => {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const user_id = useSelector((state) => _.get(state, "user.userData.user_id"));
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getExpenses({ user_id }));
+  }, [user_id]);
 
   const onRemoveActn = (id) => {
-    console.log(id);
     setItemList(itemList.filter((e) => e.item_entertime !== id));
   };
 
@@ -31,11 +27,12 @@ const Home = () => {
     if (expenseName && price && date) {
       const obj = {
         date: date,
-        item_name: expenseName,
-        item_price: price,
-        item_quantity: quantity,
+        item: expenseName,
+        price: price,
+        quantity: quantity,
         item_entertime: new Date().getTime(),
       };
+      dispatch(setExpenses({ ...obj, user_id }));
       setItemList([...itemList, obj]);
       setExpenseName("");
       setPrice("");
@@ -101,15 +98,15 @@ const Home = () => {
             />
           </label>
 
-          {/* <label>
-            Enter Item type : 
+          <label>
+            Enter Item type :
             <select name="expense" id="price" className="select">
-              <option value="food">Fast Food</option>
-              <option value="medicine">Medicine</option>
-              <option value="Loan">Loan</option>
-              <option value="Ayaashi">Aayashi</option>
+              <option value="essential">Essential</option>
+              <option value="nonessential">Non-essential</option>
+              <option value="Lend">Lend</option>
+              <option value="Borrow">Borrow</option>
             </select>
-          </label> */}
+          </label>
 
           <button className="button" onClick={onSubmit}>
             Add to calender

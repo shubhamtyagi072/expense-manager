@@ -13,7 +13,7 @@ const User = (payload) => {
         dispatch({ type: LOGIN_CURRENT_USER_SUCCESS, payload: res });
       })
       .catch((err) => {
-        dispatch({ type: LOGIN_CURRENT_USER_FAILURE, err });
+        dispatch({ type: LOGIN_CURRENT_USER_FAILURE, payload:err });
       });
   };
 };
