@@ -1,0 +1,47 @@
+.container_form {
+    width: 40vw;
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    /* display: flex; */
+  }
+
+  .button {
+    background: #7044a0;
+    border: none;
+    border-bottom: 2px solid #603a88;
+    color: white;
+    font-size: 20px;
+    font-weight: 300;
+    padding: 10px 20px;
+    margin: 30px;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  .input {
+      border: none;
+      font-size: 20px;
+      font-weight: 300;
+      margin: 10px 20px;
+      height: 40px;
+      padding: 4px 8px;
+  }
+  
+  .select {
+    border: none;
+    width: 220px;
+    font-size: 20px;
+    font-weight: 300;
+    margin: 10px 20px;
+    height: 40px;
+    padding: 4px 8px;
+  }
+  
+  label{
+    display: block;
+    background: #353239;
+    border: 1px solid #423e47;
+    text-decoration: none;
+    margin: 10px;
+  }

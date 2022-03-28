@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose')
-const bodyParser = require('body-parser')
+const cors = require('cors')
 
 mongoose.connect('mongodb://localhost:27017/testdb', {
   useNewUrlParser: 'true',
@@ -11,8 +11,10 @@ mongoose.connect('mongodb://localhost:27017/testdb', {
 const app = express();
 const PORT = process.env.PORT || 4000
 
+/* middleware */
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
+app.use(cors())
 
 app.use('/api/v1',require('./src/routes/login.js'))
 

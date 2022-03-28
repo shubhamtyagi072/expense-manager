@@ -23,7 +23,7 @@ const Home = () => {
 
   const onRemoveActn = (id) => {
     console.log(id);
-    setItemList(itemList.filter((e) => e.item_entertime != id));
+    setItemList(itemList.filter((e) => e.item_entertime !== id));
   };
 
   const onSubmit = (e) => {
