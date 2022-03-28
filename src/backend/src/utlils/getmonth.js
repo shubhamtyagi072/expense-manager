@@ -1,5 +1,5 @@
 exports.getMonth = (e) => {
-  switch (e) {
+  switch (e[1]) {
     case "1":
       return "Jan";
       case "2":

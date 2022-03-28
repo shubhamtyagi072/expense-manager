@@ -5,7 +5,10 @@ const Expense = new mongoose.Schema({
     item:String,
     price:Number,
     quantity:Number,
-    user_id:String
+    user_id:String,
+    month:String,
+    year:String,
+    id:String
 })
 
 const ExpenseModel = mongoose.model('Expense',Expense)
