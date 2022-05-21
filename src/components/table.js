@@ -1,5 +1,4 @@
 import React from "react";
-import "./table.css";
 
 const Table = ({ item, onRemoveActn }) => {
   let sum = 0
