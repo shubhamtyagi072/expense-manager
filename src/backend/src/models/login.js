@@ -1,7 +1,10 @@
 const mongoose = require('mongoose')
 
 const Login = new mongoose.Schema({
-    name:String,
+    name: {
+        required:true,
+        type:String
+    },
     email:String,
     user_id:String
 })

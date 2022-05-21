@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Table from "../../components/table";
+import Piechart from "../../components/Piechart";
 import "./Home.css";
 import setExpenses,{getExpenses} from "../../Actions/Expense";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,13 +11,16 @@ const Home = () => {
   const [expenseName, setExpenseName] = useState("");
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
+  const [type, setType] = useState("essential");
   const [quantity, setQuantity] = useState(1);
-  const user_id = useSelector((state) => _.get(state, "user.userData.user_id"));
+  const userid = useSelector((state) => _.get(state, "user.userData"));
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("user_id",userid)
+    const { user_id } = userid
     dispatch(getExpenses({ user_id }));
-  }, [user_id]);
+  }, [userid]);
 
   const onRemoveActn = (id) => {
     setItemList(itemList.filter((e) => e.item_entertime !== id));
@@ -30,9 +34,10 @@ const Home = () => {
         item: expenseName,
         price: price,
         quantity: quantity,
+        type:type,
         item_entertime: new Date().getTime(),
       };
-      dispatch(setExpenses({ ...obj, user_id }));
+      dispatch(setExpenses({ ...obj, userid }));
       setItemList([...itemList, obj]);
       setExpenseName("");
       setPrice("");
@@ -47,7 +52,7 @@ const Home = () => {
       <div className="header">
         <div className="container">
           <h1>Expense ₹ Manager</h1>
-          <h2>manage your expenses here!!</h2>
+          <h2> Hi {userid.name} manage your expenses here!!</h2>
         </div>
       </div>
 
@@ -100,9 +105,9 @@ const Home = () => {
 
           <label>
             Enter Item type :
-            <select name="expense" id="price" className="select">
-              <option value="essential">Essential</option>
-              <option value="nonessential">Non-essential</option>
+            <select name="expense" id="price" className="select" onChange={(e) => setType(e.target.value)} value={type}>
+              <option value="Essential">Essential</option>
+              <option value="Non-essential">Non-essential</option>
               <option value="Lend">Lend</option>
               <option value="Borrow">Borrow</option>
             </select>
@@ -116,6 +121,7 @@ const Home = () => {
       <div>
         <h3>expense for the April month</h3>
         <Table item={itemList} onRemoveActn={onRemoveActn} />
+        {/* {itemList.length > 0 && <Piechart data={itemList}/>} */}
       </div>
     </div>
   );

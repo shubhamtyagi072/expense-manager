@@ -3,7 +3,7 @@ import "./table.css";
 
 const Table = ({ item, onRemoveActn }) => {
   let sum = 0
-  const HEADER = ["Date", "Item", "Price", "Quantity","Total Price", "Action"];
+  const HEADER = ["Date", "Item", "Price", "Quantity","Total Price","type", "Action"];
   return (
     <>
       <table>
@@ -14,15 +14,16 @@ const Table = ({ item, onRemoveActn }) => {
         </tr>
         {item.map((e) => {
           let currentSum = 0
-          currentSum = currentSum + (parseInt(e.item_price) * parseInt(e.item_quantity))
+          currentSum = currentSum + (parseInt(e.price) * parseInt(e.quantity))
           sum = sum + currentSum
           return (
             <tr key={e.item_entertime}>
               <td> {e.date} </td>
-              <td>{e.item_name}</td>
-              <td>{e.item_price} ₹</td>
-              <td>{e.item_quantity}</td>
+              <td>{e.item}</td>
+              <td>{e.price} ₹</td>
+              <td>{e.quantity}</td>
               <td>{currentSum} ₹</td>
+              <td>{e.type}</td>
               <td>
                 <button onClick={() => onRemoveActn(e.item_entertime)}>Remove</button>
               </td>
