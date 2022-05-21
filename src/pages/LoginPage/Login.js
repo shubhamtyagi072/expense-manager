@@ -17,8 +17,10 @@ const Login = () => {
     const requestBody = { name, email, user_id: uuidv4() };
     dispatch(User(requestBody));
   };
-
-  if (!_.isEmpty(user_data.userData)) navigate("/dashboard");
+  
+  if (!(_.isEmpty(user_data.userData))) {
+    navigate("/dashboard");
+  }
 
   return (
     <div className="container_form">
@@ -36,7 +38,7 @@ const Login = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </label>
-
+          {/* <img src={Expense}></img> */}
           <label>
             Enter Item Email:
             <input

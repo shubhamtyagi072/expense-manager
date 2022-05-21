@@ -7,7 +7,6 @@ import {
   const initial = { ItemData: {}, loading: false, error: null };
   
   const setExpense = (state = initial, action) => {
-      console.log(action,"setExpense")
     switch (action.type) {
       case SET_CURRENT_USER_EXPENSE:
         return { ...state, loading: true };

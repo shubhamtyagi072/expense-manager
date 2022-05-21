@@ -7,23 +7,22 @@ export const login = async ({ payload }) => {
       `http://localhost:4000/api/v1/login`,
       payload
     );
-    return get(result, "data");
+    console.log("result",result)
+    return Promise.resolve(get(result, "data"));
   } catch (err) {
-    return err;
+     return Promise.reject(err)
   }
 };
 
 export const setExpense = async ({ payload }) => {
-    console.log("payload",payload)
   try {
     const result = await axios.post(
       `http://localhost:4000/api/v1/expense`,
       payload
     );
-    console.log(result)
-    return get(result, "data");
-  } catch (err) {
-    return err;
+    return Promise.resolve(get(result, "data"));
+  } catch (err){
+    return Promise.reject(err)
   }
 };
 
@@ -33,8 +32,8 @@ export const getExpense = async ({ payload }) => {
         `http://localhost:4000/api/v1/user-expense`,
         payload
       );
-      return get(result, "data");
+      return Promise.resolve(get(result, "data"));
     } catch (err) {
-      return err;
+      return Promise.reject(err)
     }
   };

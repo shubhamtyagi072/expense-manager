@@ -6,6 +6,7 @@ import {
 } from "../ActionCreater/Actions";
 
 const User = (payload) => {
+  console.log("payload",payload)
   return (dispatch) => {
     dispatch({ type: LOGIN_CURRENT_USER });
     login({payload})

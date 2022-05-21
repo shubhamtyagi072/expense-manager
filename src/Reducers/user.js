@@ -4,13 +4,12 @@ import {
   LOGIN_CURRENT_USER_FAILURE,
 } from "../ActionCreater/Actions";
 
-const initial = { userData: {}, laoding: false, error: null };
+const initial = { userData: {}, loading: false, error: null };
 
 const user = (state = initial, action) => {
-  console.log(action)
   switch (action.type) {
     case LOGIN_CURRENT_USER:
-      return { ...state, laoding: true };
+      return { ...state, loading: true };
 
     case LOGIN_CURRENT_USER_SUCCESS:
       return {

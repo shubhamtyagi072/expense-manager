@@ -1,4 +1,4 @@
-import { setExpense,getExpense } from "../Services/Apiservices";
+import { setExpense, getExpense } from "../Services/Apiservices";
 import {
   GET_CURRENT_USER_EXPENSE,
   GET_CURRENT_USER_EXPENSE_SUCCESS,
@@ -10,9 +10,8 @@ import {
 
 const setExpenses = (payload) => {
   return (dispatch) => {
-    console.log(dispatch,"setExpenses")
     dispatch({ type: SET_CURRENT_USER_EXPENSE });
-    setExpense({payload})
+    setExpense({ payload })
       .then((res) => {
         dispatch({ type: SET_CURRENT_USER_EXPENSE_SUCCESS, payload: res });
       })
@@ -25,7 +24,7 @@ const setExpenses = (payload) => {
 export const getExpenses = (payload) => {
   return (dispatch) => {
     dispatch({ type: GET_CURRENT_USER_EXPENSE });
-    getExpense({payload})
+    getExpense({ payload })
       .then((res) => {
         dispatch({ type: GET_CURRENT_USER_EXPENSE_SUCCESS, payload: res });
       })
@@ -35,4 +34,4 @@ export const getExpenses = (payload) => {
   };
 };
 
-export default setExpenses
+export default setExpenses;
