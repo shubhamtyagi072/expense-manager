@@ -13,9 +13,9 @@ const app = express();
 const PORT = process.env.PORT || 4000
 
 /* middleware */
-app.use(express.json())
+app.use(express.json()) // it is being used for the post request
 app.use(express.urlencoded({extended: true}));
-app.use(cors())
+app.use(cors()) // for passing cors request
 
 app.use('/api/v1',require('./src/routes/login.js'))
 

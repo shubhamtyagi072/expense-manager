@@ -9,13 +9,13 @@ const User = (payload) => {
   console.log("payload",payload)
   return (dispatch) => {
     dispatch({ type: LOGIN_CURRENT_USER });
-    login({payload})
-      .then((res) => {
-        dispatch({ type: LOGIN_CURRENT_USER_SUCCESS, payload: res });
-      })
-      .catch((err) => {
-        dispatch({ type: LOGIN_CURRENT_USER_FAILURE, payload:err });
-      });
+      login({ payload })
+        .then((res) => {
+          dispatch({ type: LOGIN_CURRENT_USER_SUCCESS, payload: res });
+        })
+        .catch((err) => {
+          dispatch({ type: LOGIN_CURRENT_USER_FAILURE, payload: err });
+        });
   };
 };
 
