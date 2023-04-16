@@ -11,6 +11,7 @@ const CustomInput = ({ classname, placeholder, onChange, value }) => {
             placeholder={placeholder ?? ""}
             onChange={onChange}
             value={value}
+            style={{width:"300px"}}
           />
         </Col>
       </Row>
