@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import User from "../../Actions/User";
 import "./Login.css";
-import LoadingComponent from "../../components/LoadingComponent";
+// import LoadingComponent from "../../components/LoadingComponent";
 import FieldComponent from "../../components/FieldComponent";
 import Card from "../../components/Card";
-import { Button, Col, Row, Space } from "antd";
-import { CustomLabel } from "../../Constant";
+import { Button, Col, Row } from "antd";
+import { CustomLabel, type_of_input } from "../../Constant";
 var _ = require("lodash");
 
 const Login = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const name = "";
+  const email = "";
   const [userFormData, setUserData] = useState({
     data: { name: "", email: "" },
     error: { nameError: false, emailError: false },
@@ -38,37 +38,47 @@ const Login = () => {
       <div className="sub_conatiner_login">
         <Card width={window.innerWidth / 3}>
           <div className="login_input_group">
-          <CustomLabel fontSize="14">Expense Manager</CustomLabel> 
-            <FieldComponent
-              label="Name"
-              error="Please enter your name"
-              isError={formError.nameError}
-              placeholder="Please enter your name"
-              onChange={(e) =>
-                setUserData({
-                  ...userFormData,
-                  data: { ...formData, name: e.target.value },
-                })
-              }
-              value={formData.name}
-            />
-
-            <FieldComponent
-              label="Email"
-              error="Please enter your Email"
-              placeholder="Please enter your Email"
-              isError={formError.emailError}
-              onChange={(e) =>
-                setUserData({
-                  ...userFormData,
-                  data: { ...formData, email: e.target.value },
-                })
-              }
-              value={formData.email}
-            />
+            <CustomLabel fontSize="14">Expense Manager</CustomLabel>
+            <Row justify={"center"}>
+              <Col lg={16}>
+                <FieldComponent
+                  label="Name"
+                  error="Please enter your name"
+                  isError={formError.nameError}
+                  placeholder="Please enter your name"
+                  onChange={(e) =>
+                    setUserData({
+                      ...userFormData,
+                      data: { ...formData, name: e.target.value },
+                    })
+                  }
+                  type={type_of_input.input}
+                  value={formData.name}
+                />
+              </Col>
+              <Col lg={16}>
+                <FieldComponent
+                  label="Email"
+                  error="Please enter your Email"
+                  placeholder="Please enter your Email"
+                  isError={formError.emailError}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userFormData,
+                      data: { ...formData, email: e.target.value },
+                    })
+                  }
+                  type={type_of_input.input}
+                  value={formData.email}
+                />
+              </Col>
+            </Row>
             <Row>
-              <Col lg={8} style={{textAlign:"right"}}>
-              <Button type="primary" onClick={onSubmit}> Submit</Button>
+              <Col lg={8} style={{ textAlign: "right" }}>
+                <Button type="primary" onClick={onSubmit}>
+                  {" "}
+                  Submit
+                </Button>
               </Col>
             </Row>
           </div>

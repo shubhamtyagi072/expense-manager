@@ -25,3 +25,12 @@ body {
 .my-4{
   margin: 30px 0px;
 }
+
+.m-4{
+  margin: 30px;
+}
+
+.ant-segmented .ant-segmented-item-selected {
+  background-color: #1677ff;
+  color: azure;
+}
