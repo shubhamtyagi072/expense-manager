@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { getExpenses } from "../../Actions/Expense";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, DatePicker, Row, Segmented } from "antd";
@@ -8,12 +8,11 @@ import FloatingButtonWrapper from "../../HOC/FloatingButtonWrapper";
 import { PlusOutlined } from "@ant-design/icons";
 import DrawerWrapper from "../../HOC/DrawerWrapper";
 import TableComponent from "../../components/TableComponent";
-import { size } from "lodash";
 import CustomCard from "../../elements/CustomCard";
 var _ = require("lodash");
 
 const Home = ({ drawerChange }) => {
-  const [itemList, setItemList] = useState([]);
+  // const [itemList, setItemList] = useState([]);
   const [monthData, setMonthData] = useState(
     segemented_data[new Date().getMonth()]
   );
@@ -21,15 +20,16 @@ const Home = ({ drawerChange }) => {
   const userid = useSelector((state) => _.get(state, "user.userData"));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    console.log("user_id", userid);
-    const { user_id } = userid;
-    dispatch(getExpenses({ user_id }));
-  }, [userid]);
+  // useEffect(() => {
+  //   console.log("user_id", userid);
+  //   const { user_id } = userid;
+  // }, [userid]);
 
-  const onRemoveActn = (id) => {
-    setItemList(itemList.filter((e) => e.item_entertime !== id));
-  };
+  dispatch(getExpenses({ user_id: userid.user_id }));
+
+  // const onRemoveActn = (id) => {
+  //   setItemList(itemList.filter((e) => e.item_entertime !== id));
+  // };
 
   return (
     <div style={{ position: "relative" }}>

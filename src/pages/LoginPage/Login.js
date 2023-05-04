@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import User from "../../Actions/User";
 import "./Login.css";
-import LoadingComponent from "../../components/LoadingComponent";
+// import LoadingComponent from "../../components/LoadingComponent";
 import FieldComponent from "../../components/FieldComponent";
 import Card from "../../components/Card";
-import { Button, Col, Row, Space } from "antd";
+import { Button, Col, Row } from "antd";
 import { CustomLabel, type_of_input } from "../../Constant";
 var _ = require("lodash");
 
 const Login = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const name = "";
+  const email = "";
   const [userFormData, setUserData] = useState({
     data: { name: "", email: "" },
     error: { nameError: false, emailError: false },
