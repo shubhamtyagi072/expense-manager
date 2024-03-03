@@ -2,10 +2,10 @@
 
 # dependencies
 /node_modules
-.env
+.env.prod
 /.pnp
 .pnp.js
-.env
+.env.local
 # testing
 /coverage
 

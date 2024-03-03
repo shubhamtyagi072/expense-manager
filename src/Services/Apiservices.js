@@ -4,7 +4,7 @@ import get from "lodash/get";
 export const postApi = async ({ payload, endpoint }) => {
   try {
     const result = await axios.post(endpoint, payload);
-    console.log("result", result);
+    // console.log("result", result);
     return Promise.resolve(get(result, "data"));
   } catch (err) {
     return Promise.reject(err);
@@ -12,8 +12,7 @@ export const postApi = async ({ payload, endpoint }) => {
 };
 
 export const login = async ({ payload }) => {
-  
-  console.log(payload)
+  console.log(payload, `${process.env.REACT_APP_APIURL}/api/v1/login`);
   try {
     const result = await axios.post(
       `${process.env.REACT_APP_APIURL}/api/v1/login`,
@@ -22,6 +21,7 @@ export const login = async ({ payload }) => {
     console.log("result", result);
     return Promise.resolve(get(result, "data"));
   } catch (err) {
+    console.error(err);
     return Promise.reject(err);
   }
 };
@@ -29,11 +29,12 @@ export const login = async ({ payload }) => {
 export const setExpense = async ({ payload }) => {
   try {
     const result = await axios.post(
-      `http://localhost:4000/api/v1/expense`,
+      `${process.env.REACT_APP_APIURL}/api/v1/expense`,
       payload
     );
     return Promise.resolve(get(result, "data"));
   } catch (err) {
+    console.error(err);
     return Promise.reject(err);
   }
 };
@@ -41,11 +42,12 @@ export const setExpense = async ({ payload }) => {
 export const getExpense = async ({ payload }) => {
   try {
     const result = await axios.post(
-      `http://localhost:4000/api/v1/user-expense`,
+      `${process.env.REACT_APP_APIURL}/api/v1/user-expense`,
       payload
     );
     return Promise.resolve(get(result, "data"));
   } catch (err) {
+    console.error(err);
     return Promise.reject(err);
   }
 };

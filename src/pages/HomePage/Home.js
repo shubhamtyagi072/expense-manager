@@ -12,23 +12,34 @@ import CustomCard from "../../elements/CustomCard";
 var _ = require("lodash");
 
 const Home = ({ drawerChange }) => {
-  // const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [monthData, setMonthData] = useState(
     segemented_data[new Date().getMonth()]
   );
   const [yearData, setYeatData] = useState(new Date().getFullYear());
-  const { user_id, name } = useSelector((state) =>
-    _.get(state, "user.userData", {})
+  const { _id: user_id, name } = useSelector((state) =>
+    _.get(state, "user.userData.response", {})
   );
+  // const data = useSelector((state) => state);
+  // console.log("uyttuyyut", data);
+  const { ItemData } = useSelector((state) => _.get(state, "itemList", {}));
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getExpenses({ user_id }));
-  }, [dispatch, user_id]);
+    console.log(user_id);
+    if (user_id) {
+      dispatch(getExpenses({ user_id }));
+      sessionStorage.setItem("USER_ID", user_id);
+    }
+  }, [user_id]);
 
-  // const onRemoveActn = (id) => {
-  //   setItemList(itemList.filter((e) => e.item_entertime !== id));
-  // };
+  useEffect(() => {
+    setItemList(ItemData);
+  }, [ItemData]);
+
+  const onRemoveActn = (id) => {
+    setItemList(itemList.filter((e) => e.item_entertime !== id));
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -85,7 +96,7 @@ const Home = ({ drawerChange }) => {
       <div className="m-4">
         <Row>
           <Col span={24}>
-            <TableComponent />
+            <TableComponent data={itemList} />
           </Col>
         </Row>
       </div>

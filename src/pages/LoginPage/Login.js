@@ -22,7 +22,7 @@ const Login = () => {
   const user_data = useSelector((state) => state.user);
 
   useEffect(() => {
-    localStorage.clear();
+    sessionStorage.clear();
   }, []);
 
   const onSubmit = (e) => {
