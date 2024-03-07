@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { getExpenses } from "../../Actions/Expense";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Col, DatePicker, Row, Segmented } from "antd";
@@ -12,24 +12,34 @@ import CustomCard from "../../elements/CustomCard";
 var _ = require("lodash");
 
 const Home = ({ drawerChange }) => {
-  // const [itemList, setItemList] = useState([]);
+  const [itemList, setItemList] = useState([]);
   const [monthData, setMonthData] = useState(
     segemented_data[new Date().getMonth()]
   );
   const [yearData, setYeatData] = useState(new Date().getFullYear());
-  const userid = useSelector((state) => _.get(state, "user.userData"));
+  const { _id: user_id, name } = useSelector((state) =>
+    _.get(state, "user.userData.response", {})
+  );
+  // const data = useSelector((state) => state);
+  // console.log("uyttuyyut", data);
+  const { ItemData } = useSelector((state) => _.get(state, "itemList", {}));
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   console.log("user_id", userid);
-  //   const { user_id } = userid;
-  // }, [userid]);
+  useEffect(() => {
+    console.log(user_id);
+    if (user_id) {
+      dispatch(getExpenses({ user_id }));
+      sessionStorage.setItem("USER_ID", user_id);
+    }
+  }, [user_id]);
 
-  dispatch(getExpenses({ user_id: userid.user_id }));
+  useEffect(() => {
+    setItemList(ItemData);
+  }, [ItemData]);
 
-  // const onRemoveActn = (id) => {
-  //   setItemList(itemList.filter((e) => e.item_entertime !== id));
-  // };
+  const onRemoveActn = (id) => {
+    setItemList(itemList.filter((e) => e.item_entertime !== id));
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -49,7 +59,7 @@ const Home = ({ drawerChange }) => {
       <div className="home-container">
         <div style={{ margin: "30px 0px" }}>
           <h1>Expense ₹ Manager</h1>
-          <h2> Hi {userid.name} manage your expenses here!!</h2>
+          <h2> Hi {name} manage your expenses here!!</h2>
           <div className="container_form_home_button">
             <Button
               type="primary"
@@ -86,7 +96,7 @@ const Home = ({ drawerChange }) => {
       <div className="m-4">
         <Row>
           <Col span={24}>
-            <TableComponent />
+            <TableComponent data={itemList} />
           </Col>
         </Row>
       </div>

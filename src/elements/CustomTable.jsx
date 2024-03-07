@@ -7,26 +7,31 @@ const CustomTable = ({
   onChange,
   pagination,
   size,
-  showHeader = true
+  showHeader = true,
 }) => {
   const tableProps = {
-    size : "large", 
-    
+    size: "large",
+
     showHeader,
     // footer: showfooter ? defaultFooter : undefined,
     // rowSelection,
     // scroll,
     // tableLayout,
   };
+  console.log(dataSource);
   return (
     <div>
       <Row>
         <Col span={24}>
-          <Table {...tableProps} dataSource={dataSource} columns={tableColumns} />
+          <Table
+            {...tableProps}
+            dataSource={dataSource}
+            columns={tableColumns}
+          />
         </Col>
       </Row>
     </div>
   );
 };
 
-export default CustomTable;
+export default React.memo(CustomTable);

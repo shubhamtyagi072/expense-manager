@@ -1,22 +1,16 @@
-import {
-  Button,
-  Col,
-  Drawer,
-  Row,
-  Space,
-} from "antd";
+import { Button, Col, Drawer, Row, Space } from "antd";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import setExpenses from "../Actions/Expense";
 import FieldComponent from "../components/FieldComponent";
 import { form_select_option, type_of_input } from "../Constant";
-import  '../pages/HomePage/Home.css'
+import moment from "moment/moment";
+import "../pages/HomePage/Home.css";
 var _ = require("lodash");
-
 
 function DrawerWrapper(WrapperComponent) {
   const initialState = {
-    date: new Date(),
+    date: Date.now(),
     name: "",
     price: 0,
     type: form_select_option[1].value,
@@ -27,7 +21,9 @@ function DrawerWrapper(WrapperComponent) {
     const [open, setOpen] = useState(false);
     const [expenseData, setExpenseData] = useState(initialState);
     const { date, name, price, type, quantity } = expenseData;
-    const userid = useSelector((state) => _.get(state, "user.userData"));
+    const { id: userid } = useSelector((state) =>
+      _.get(state, "user.userData.response")
+    );
     const dispatch = useDispatch();
     const onSubmit = (e) => {
       console.log("userdata------->>>", expenseData);
@@ -39,22 +35,27 @@ function DrawerWrapper(WrapperComponent) {
           price: price,
           quantity: quantity,
           type: type,
-          item_entertime: new Date().getTime(),
+          item_entertime: Date.now(),
+          month: new Date(date).getMonth(),
+          year: new Date(date).getFullYear(),
         };
         dispatch(setExpenses({ ...obj, userid }));
-        setExpenseData(initialState);
+        debugger;
         window.scrollTo({
           top: document.body.scrollHeight,
           behavior: "smooth",
         });
-        onClose()
+        onClose();
       } else alert("please enter all the enteries");
     };
     const showDrawer = () => {
-      console.log("test");
+      debugger;
+      setExpenseData(initialState);
       setOpen(true);
     };
     const onClose = () => {
+      debugger;
+      setExpenseData(initialState);
       setOpen(false);
     };
     return (
@@ -89,7 +90,12 @@ function DrawerWrapper(WrapperComponent) {
                 <FieldComponent
                   label="Enter Item Date:"
                   error="Please enter your Date"
-                  onChange={(e) => console.log(e)}
+                  onChange={(e) => {
+                    setExpenseData({
+                      ...expenseData,
+                      date: new Date(e).getTime(),
+                    });
+                  }}
                   type={type_of_input.datepicker}
                 />
 
