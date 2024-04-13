@@ -1,11 +1,13 @@
 import { Result } from "antd";
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import Home from "../pages/HomePage/Home";
-import Login from "../pages/LoginPage/Login";
+const Login = React.lazy(() => import("../pages/LoginPage/Login"));
+const Home = React.lazy(() => import(".././pages/HomePage/Home"));
+const SignUpForm = React.lazy(() => import("../pages/SignUpPage"));
 
 const NotFoundPage = () => {
   // const navigate = useNavigate()
+
   return (
     <Result
       status="404"
@@ -18,13 +20,16 @@ const NotFoundPage = () => {
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Login />} exact />
-        <Route path="/dashboard" element={<Home />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Suspense fallback={"Loading your data ..."}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<SignUpForm />} exact />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Home />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Suspense>
   );
 };
 

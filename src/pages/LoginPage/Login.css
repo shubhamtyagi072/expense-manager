@@ -3,18 +3,20 @@
   /* padding: 50px; */
 }
 
-.sub_conatiner_login{
+.sub_conatiner_login {
   /* width: 80%; */
   /* height: 60%; */
   margin: auto;
   display: flex;
   flex-direction: row;
-  object-fit:fill;
+  object-fit: fill;
   /* overflow: hidden; */
-
 }
-
-.image_login{
+.login-card {
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.image_login {
   margin-left: -100px;
 }
 
@@ -22,7 +24,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  object-fit:contain;
+  object-fit: contain;
 }
 
 .login_input_group > label {
@@ -30,5 +32,5 @@
   text-align: center;
   margin-bottom: 10px;
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }

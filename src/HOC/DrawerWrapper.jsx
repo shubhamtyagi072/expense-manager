@@ -21,8 +21,8 @@ function DrawerWrapper(WrapperComponent) {
     const [open, setOpen] = useState(false);
     const [expenseData, setExpenseData] = useState(initialState);
     const { date, name, price, type, quantity } = expenseData;
-    const { id: userid } = useSelector((state) =>
-      _.get(state, "user.userData.response")
+    const { userid } = useSelector((state) =>
+      _.get(state, "user.userData")
     );
     const dispatch = useDispatch();
     const onSubmit = (e) => {
