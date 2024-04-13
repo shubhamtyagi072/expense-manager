@@ -6,14 +6,37 @@ import User from "../../Actions/User";
 import "./Login.css";
 import LoadingComponent from "../../components/LoadingComponent";
 import FieldComponent from "../../components/FieldComponent";
-import Card from "../../components/Card";
-import { Button, Col, Row } from "antd";
-import { CustomLabel, type_of_input } from "../../Constant";
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Row,
+  Col,
+  Divider,
+  Card,
+  message,
+} from "antd";
+import { CustomLabel, emailError, type_of_input } from "../../Constant";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../../firebase";
+import {
+  UserOutlined,
+  LockOutlined,
+  EyeTwoTone,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
+import "./Login.css";
 var _ = require("lodash");
 
 const Login = () => {
   const [userFormData, setUserData] = useState({
-    data: { name: "", email: "" },
+    data: { password: "", email: "" },
     error: { nameError: false, emailError: false },
   });
   const { data: formData, error: formError } = userFormData;
@@ -25,84 +48,97 @@ const Login = () => {
     sessionStorage.clear();
   }, []);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    const { name, email } = formData;
-    const requestBody = { name, email: email.toLowerCase(), user_id: uuidv4() };
-    dispatch(User(requestBody));
+  const onSubmit = async (e) => {
+    const { password, email } = formData;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        const requestBody = { email: email.toLowerCase() };
+        dispatch(User(requestBody));
+        if (!_.isEmpty(user_data.userData)) {
+          navigate("/dashboard");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, emailError(errorCode));
+        message.error(emailError(errorCode));
+      });
   };
 
-  if (!_.isEmpty(user_data.userData)) {
-    navigate("/dashboard");
-  }
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   return (
     <>
       {user_data.loading ? (
         <LoadingComponent />
       ) : (
-        <div className="container_form center">
-          <div className="sub_conatiner_login">
-            <Card width={window.innerWidth / 3}>
-              <div className="login_input_group">
-                <CustomLabel fontSize="14">Expense Manager</CustomLabel>
-                <Row justify={"center"}>
-                  <Col lg={16}>
-                    <FieldComponent
-                      label="Name"
-                      error="Please enter your name"
-                      isError={formError.nameError}
-                      placeholder="Please enter your name"
-                      onChange={(e) =>
-                        setUserData({
-                          ...userFormData,
-                          data: { ...formData, name: e.target.value },
-                        })
-                      }
-                      type={type_of_input.input}
-                      value={formData.name}
-                    />
-                  </Col>
-                  <Col lg={16}>
-                    <FieldComponent
-                      label="Email"
-                      error="Please enter your Email"
-                      placeholder="Please enter your Email"
-                      isError={formError.emailError}
-                      onChange={(e) =>
-                        setUserData({
-                          ...userFormData,
-                          data: { ...formData, email: e.target.value },
-                        })
-                      }
-                      type={type_of_input.input}
-                      value={formData.email}
-                    />
-                  </Col>
-                </Row>
-                <Row justify={"center"}>
-                  <Col lg={16}>
-                    <Row>
-                      <Col lg={10} style={{ textAlign: "left" }}>
-                        <Button type="primary" onClick={onSubmit}>
-                          {" "}
-                          Submit
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </div>
+        <Row justify="center" align="middle" className="container_form">
+          <Col xs={20} sm={16} md={12} lg={8}>
+            <Card className="login-card" title="Login">
+              <Form
+                name="login"
+                initialValues={{ remember: true }}
+                onFinish={onSubmit}
+              >
+                <Form.Item
+                  name="email"
+                  rules={[
+                    { required: true, message: "Please input your email!" },
+                  ]}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userFormData,
+                      data: { ...formData, email: e.target.value },
+                    })
+                  }
+                  value={formData.email}
+                >
+                  <Input prefix={<UserOutlined />} placeholder="Email" />
+                </Form.Item>
+
+                <Form.Item
+                  name="password"
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                  ]}
+                >
+                  <Input.Password
+                    prefix={<LockOutlined />}
+                    placeholder="Password"
+                    iconRender={(visible) =>
+                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    }
+                    onChange={(e) =>
+                      setUserData({
+                        ...userFormData,
+                        data: { ...formData, password: e.target.value },
+                      })
+                    }
+                    value={formData.password}
+                  />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="login-button"
+                  >
+                    Login
+                  </Button>
+                </Form.Item>
+              </Form>
             </Card>
-            <div className="image_login">
-              <img
-                src="https://mdbootstrap.com/img/new/ecommerce/vertical/004.jpg"
-                className="w-100 rounded-4 shadow-4"
-                alt=""
-              />
-            </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
       )}
     </>
   );

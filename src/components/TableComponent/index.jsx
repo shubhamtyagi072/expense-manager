@@ -2,7 +2,7 @@ import { Button, Space } from "antd";
 import React from "react";
 import CustomTable from "../../elements/CustomTable";
 
-const TableComponent = ({ data = [] }) => {
+const TableComponent = ({ data = [], setAmount, removeItem }) => {
   const columns = [
     {
       title: "Date",
@@ -43,14 +43,16 @@ const TableComponent = ({ data = [] }) => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Button type={"primary"}>Remove</Button>
+          <Button type={"primary"} onClick={() => {
+            removeItem(record.key)
+          }}>Remove</Button>
         </Space>
       ),
     },
   ];
 
   const totData = [];
-
+  let amount = 0;
   for (const value of data) {
     const Tempdata = {};
     Tempdata.key = value._id;
@@ -60,10 +62,10 @@ const TableComponent = ({ data = [] }) => {
     Tempdata.quantity = value.quantity;
     Tempdata.item = value.item;
     Tempdata.date = new Date(Number(value.date)).toLocaleString();
-
+    amount = amount + value.price * value.quantity;
     totData.push(Tempdata);
   }
-
+  setAmount(amount);
   return (
     <div>
       <CustomTable tableColumns={columns} dataSource={totData} />

@@ -9,16 +9,19 @@ import { PlusOutlined } from "@ant-design/icons";
 import DrawerWrapper from "../../HOC/DrawerWrapper";
 import TableComponent from "../../components/TableComponent";
 import CustomCard from "../../elements/CustomCard";
+import { deletExpense, monthExpense } from "../../Services/Apiservices";
+import { GET_CURRENT_USER_EXPENSE_SUCCESS } from "../../ActionCreater/Actions";
 var _ = require("lodash");
 
 const Home = ({ drawerChange }) => {
   const [itemList, setItemList] = useState([]);
+  const [amount, setAmount] = useState(0);
   const [monthData, setMonthData] = useState(
     segemented_data[new Date().getMonth()]
   );
   const [yearData, setYeatData] = useState(new Date().getFullYear());
-  const { _id: user_id, name } = useSelector((state) =>
-    _.get(state, "user.userData.response", {})
+  const { user_id, name } = useSelector((state) =>
+    _.get(state, "user.userData", {})
   );
   // const data = useSelector((state) => state);
   // console.log("uyttuyyut", data);
@@ -33,12 +36,27 @@ const Home = ({ drawerChange }) => {
     }
   }, [user_id]);
 
+  useEffect(() => {}, [monthData]);
+
   useEffect(() => {
     setItemList(ItemData);
   }, [ItemData]);
 
-  const onRemoveActn = (id) => {
-    setItemList(itemList.filter((e) => e.item_entertime !== id));
+  const onRemoveActn = async (id) => {
+    try {
+      const res = await deletExpense({ id });
+      setItemList(itemList.filter((e) => e._id !== id));
+    } catch (err) {}
+  };
+
+  const onMonthChangeAction = async (e) => {
+    try {
+      const res = await monthExpense({
+        month: segemented_data.indexOf(e),
+        user_id,
+      });
+      dispatch({ type: GET_CURRENT_USER_EXPENSE_SUCCESS, payload: res });
+    } catch (err) {}
   };
 
   return (
@@ -79,7 +97,7 @@ const Home = ({ drawerChange }) => {
               <CustomLabel>
                 Data of the Following Month:{" "}
                 <span style={{ color: "red", fontSize: "20px" }}>
-                  {monthData} is ₹ 0
+                  {monthData} is ₹ {amount}
                 </span>
                 &nbsp; of {yearData} Year
               </CustomLabel>
@@ -88,7 +106,10 @@ const Home = ({ drawerChange }) => {
               options={segemented_data}
               size="large"
               defaultValue={monthData}
-              onChange={(e) => setMonthData(e)}
+              onChange={(e) => {
+                onMonthChangeAction(e);
+                setMonthData(e);
+              }}
             />
           </Col>
         </Row>
@@ -96,7 +117,11 @@ const Home = ({ drawerChange }) => {
       <div className="m-4">
         <Row>
           <Col span={24}>
-            <TableComponent data={itemList} />
+            <TableComponent
+              data={itemList}
+              setAmount={setAmount}
+              removeItem={onRemoveActn}
+            />
           </Col>
         </Row>
       </div>
